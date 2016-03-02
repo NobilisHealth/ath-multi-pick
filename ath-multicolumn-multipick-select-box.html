@@ -1,0 +1,58 @@
+<div class="multi-pick">
+    <div class="multi-pick-inner">
+        <div class="row" ng-repeat="item in items"
+             ng-class="{selectedItem: selectedItems.indexOf(item[value]) > -1}">
+            <div class="col-xs-10" style="padding: 0; overflow-x: hidden;">
+                <label class="checkbox" title="{{ item[label] }}">
+                    <input type="checkbox"
+                           value="{{ item[value] }}"
+                           ng-checked="selectedItems.indexOf(item[value]) > -1"
+                           ng-click="addRemoveOption(item[value])">
+                    {{ item[label] }}
+                    <span ng-show="!multiAlts">
+                        <span class="alt-selected-text"
+                              ng-show="item[value] == altValue"
+                              ng-class="{selectedItem: selectedItems.indexOf(item[value]) > -1}"
+                              >({{ altLabel }})</span>
+                    </span>
+
+                    <!-- Used to display the label more than once -->
+                    <span ng-show="multiAlts">
+                        <span class="alt-selected-text"
+                              ng-show="altValue.indexOf(item[value]) > -1"
+                              ng-class="{selectedItem: selectedItems.indexOf(item[value]) > -1}"
+                                >({{ altLabel }})</span>
+                    </span>
+                </label>
+            </div>
+            <div ng-show="!multiAlts">
+                <div class="col-xs-1" style="padding: 0 0 0 15px;">
+                        <span class="fa fa-check check-mark" ng-show="item[value] == altValue"></span>
+                    <span ng-hide="item[value] == altValue">
+                    <input type="radio"
+                           value="{{ item[value] }}"
+                           name="{{ altLabel }}"
+                           title="{{ altLabel }}"
+                           ng-checked="item[value] == altValue"
+                           ng-click="changeSelection(item[value])"
+                           ng-disabled="selectedItems.indexOf(item[value]) <= -1">
+                    </span>
+                </div>
+            </div>
+
+            <!-- Used to be able to select multiple checkboxes in the right column of the multipick -->
+            <div ng-show="multiAlts">
+                <div class="col-xs-1" style="padding: 0 0 0 15px;">
+                    <input type="checkbox"
+                           value="{{ item[value] }}"
+                           name="{{ altLabel }}"
+                           title="{{ altLabel }}"
+                           ng-checked="altValue.indexOf(item[value]) > -1"
+                           ng-click="addRemoveMultiAlts(item[value])"
+                           ng-disabled="selectedItems.indexOf(item[value]) <= -1">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
